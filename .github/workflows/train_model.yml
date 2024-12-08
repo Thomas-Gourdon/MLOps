@@ -1,0 +1,52 @@
+name: Train AI Model
+
+env:
+  PNPM_VERSION: 8.5.1
+  PYTHON_VERSION: 3.10.15
+  NODE_VERSION: 18
+  AZURE_RESOURCE_GROUP_NAME: "azure-ml-paul-colin"
+  AZURE_ML_WORKSPACE_NAME: "cats-dogs-paul-colin"
+  AZURE_WEBAPP_NAME: "cats-dogs-paul-colin"
+  AZURE_LOCATION: "northeurope"
+  DELETE_WEBAPP: "false"
+  DOCKER_API_IMAGE_NAME: "mlopspython-api"
+  DOCKER_REPOSITORY: ${{ github.repository_owner }}
+  DOCKER_WEBAPP_IMAGE_NAME: "mlopspython-webapp"
+  DOCKER_REGISTRY: "ghcr.io"
+
+# Déclencheurs du workflow
+on:
+  push:
+    branches:
+      - main  # Déclenche lors des pushes sur la branche main
+  pull_request:
+    branches:
+      - main  # Déclenche lors des pull requests vers la branche main
+  workflow_dispatch:  # Permet de lancer manuellement
+
+# Définition des jobs
+jobs:
+  train_model:
+    runs-on: ubuntu-latest  # Utilise une machine virtuelle Ubuntu
+
+    steps:
+    # 1. Checkout le code du dépôt
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Configurer Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # Version de Python à utiliser
+
+    # 3. Installer les dépendances
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # 4. Lancer l'entraînement du modèle
+    - name: Train the model
+      run: |
+        python train_yolo.py
