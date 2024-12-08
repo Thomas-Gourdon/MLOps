@@ -14,39 +14,37 @@ env:
   DOCKER_WEBAPP_IMAGE_NAME: "mlopspython-webapp"
   DOCKER_REGISTRY: "ghcr.io"
 
-# Déclencheurs du workflow
 on:
   push:
     branches:
-      - main  # Déclenche lors des pushes sur la branche main
+      - main
   pull_request:
     branches:
-      - main  # Déclenche lors des pull requests vers la branche main
-  workflow_dispatch:  # Permet de lancer manuellement
+      - main
 
-# Définition des jobs
 jobs:
   train_model:
-    runs-on: ubuntu-latest  # Utilise une machine virtuelle Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
-    # 1. Checkout le code du dépôt
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Configurer Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # Version de Python à utiliser
+        python-version: '3.9'
 
-    # 3. Installer les dépendances
-    - name: Install dependencies
+    - name: Install main dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 4. Lancer l'entraînement du modèle
-    - name: Train the model
+    - name: Clone YOLOv3 repository
       run: |
-        python train_yolo.py
+        git clone https://github.com/ultralytics/yolov3
+        cd yolov3
+        pip install -r requirements.txt
+
+    - name: Train the model
+      run: python ./yolov3/train.py  # Adapte ce chemin si nécessaire
