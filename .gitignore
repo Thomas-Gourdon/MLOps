@@ -1,0 +1,5 @@
+# Ignorer le dossier yolov3
+yolov3/
+
+# Ignorer le fichier yolov3.pt
+yolov3.pt
