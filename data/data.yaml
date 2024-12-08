@@ -1,0 +1,11 @@
+train: C:/Users/tomaz/Documents/Projet_Git/MLOps/data/images/train
+val: C:/Users/tomaz/Documents/Projet_Git/MLOps/data/images/val
+test: C:/Users/tomaz/Documents/Projet_Git/MLOps/data/images/test
+
+# Chemins vers les labels
+train_labels: C:/Users/tomaz/Documents/Projet_Git/MLOps/data/labels/train
+val_labels: C:/Users/tomaz/Documents/Projet_Git/MLOps/data/labels/val
+test_labels: C:/Users/tomaz/Documents/Projet_Git/MLOps/data/labels/test
+
+nc: 4  # Nombre de classes
+names: ['mure', 'pas_mure', 'tres_mure', 'pourrie']
