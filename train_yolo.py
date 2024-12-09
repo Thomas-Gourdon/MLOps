@@ -27,4 +27,4 @@ def train_yolov3(data_yaml, weights='yolov3.pt', img_size=416, batch_size=16, ep
 data_yaml_path = 'yaml'  # Assurez-vous que le chemin est correct
 
 # Entraîner le modèle
-train_yolov3(data_yaml=data_yaml_path, weights='yolov3.pt', img_size=416, batch_size=16, epochs=10, device='cpu')
+train_yolov3(data_yaml=data_yaml_path, weights='yolov3.pt', img_size=416, batch_size=16, epochs=1, device='cpu')

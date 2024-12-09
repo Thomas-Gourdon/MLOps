@@ -48,3 +48,10 @@ jobs:
 
     - name: Train the model
       run: python ./train_yolo.py
+
+    - name: Upload output
+      uses: actions/upload-artifact@v3
+      with:          
+        name: Publish win-x64 output
+        path: ./yolov3/runs/train/
+

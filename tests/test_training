@@ -1,0 +1,30 @@
+import unittest
+import subprocess
+import os
+
+class TestYOLOTraining(unittest.TestCase):
+    def test_training_process(self):
+        """Test if the training process runs successfully and generates outputs."""
+        # Commande pour entraîner le modèle avec train_yolo.py
+        cmd = [
+            "poetry", "run", "python", "train_yolo.py",
+            "--data", "./data/data.yaml",  # Remplace par le chemin réel vers ton fichier data.yaml
+            "--epochs", "2",  # Réduit pour un test rapide
+            "--batch-size", "2",  # Petite taille pour un test rapide
+        ]
+
+        # Exécute l'entraînement
+        result = subprocess.run(cmd, capture_output=True, text=True)
+
+        # Vérifie si l'entraînement a échoué
+        self.assertEqual(result.returncode, 0, f"Training failed: {result.stderr}")
+
+        # Vérifie que les fichiers de résultats sont générés
+        self.assertTrue(os.path.exists("runs/train"), "Training output not found")
+
+        # Optionnel : Valide qu'un fichier de poids est généré
+        weights_path = "runs/train/exp/weights/best.pt"
+        self.assertTrue(os.path.exists(weights_path), "Trained model weights not found")
+
+if __name__ == "__main__":
+    unittest.main()
